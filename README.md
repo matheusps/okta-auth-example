@@ -24,4 +24,4 @@ $ cd okta-auth-example
 $ yarn
 $ ng serve
 ```
-Obs.: You can you npm, but use yarn => because it is cooler!... duh!
+Obs.: You can use npm, but use yarn => because it is cooler!... duh!
