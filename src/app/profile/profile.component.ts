@@ -18,7 +18,10 @@ export class ProfileComponent implements OnInit {
     this.oktaAuth.getUser().then(
       (user:UserClaims) => this.user = user
     );
+  }
 
+  logout(){
+    this.oktaAuth.logout();
   }
 
 }
