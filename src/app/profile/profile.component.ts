@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OktaAuthService, UserClaims } from '@okta/okta-angular';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  user: any = { email: "" }
 
-  ngOnInit() {
+  constructor( private oktaAuth: OktaAuthService) { }
+
+  async ngOnInit() {
+    this.user = await this.oktaAuth.getUser();
+    
+    this.oktaAuth.getUser().then(
+      (user:UserClaims) => this.user = user
+    );
+
   }
 
 }

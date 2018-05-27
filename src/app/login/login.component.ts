@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { OktaAuthService } from '@okta/okta-angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  isAuthenticated: boolean;
 
-  ngOnInit() {
+  constructor(private oktaAuth: OktaAuthService, private router: Router) { }
+
+  async ngOnInit() {
+    this.isAuthenticated = await this.oktaAuth.isAuthenticated();
+    // Subscribe to authentication state changes
+    this.oktaAuth.$authenticationState.subscribe(
+      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
+    );
+
+    if(this.isAuthenticated){
+      this.router.navigate(['profile'])
+    }
+    
+  }
+
+  login(){
+    this.oktaAuth.loginRedirect();
   }
 
 }
